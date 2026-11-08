@@ -34,3 +34,10 @@ A CR at the very end of the buffer is a bare CR, because there is no following b
 ### `summarizeLineEndings(counts)`
 
 Takes the object returned by `countLineEndings` and returns one of `'crlf'`, `'lf'`, `'cr'`, `'mixed'`, or `'none'`. A file is `'mixed'` when more than one of the three counts is non-zero. A file with no line endings at all is `'none'`. Throws `TypeError` if any count is not a non-negative integer.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
